@@ -1,0 +1,28 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm ci
+
+# Copy all project files
+COPY . .
+
+# Pass build-time environment variables
+# Note: For security, sensitive keys should ideally be passed at runtime, 
+# but for a quick hackathon deployment, passing them here ensures the frontend builds correctly.
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+
+# Build the frontend and backend
+RUN npm run build
+
+# Expose the port the app runs on (Express defaults to 3000 in server.ts usually, let's make sure it reads PORT)
+EXPOSE 8080
+ENV PORT=8080
+
+# Start the server
+CMD ["npm", "start"]

@@ -1,0 +1,6 @@
+{
+  "name": "DeadlineVibe",
+  "description": "DeadlineVibe is a proactive AI productivity companion that helps you plan, prioritize, track, and complete tasks before deadlines with a premium cinematic dark ambiance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
