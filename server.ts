@@ -3,6 +3,7 @@ import path from "path";
 import dotenv from "dotenv";
 import { GoogleGenAI, Type } from "@google/genai";
 import { createServer as createViteServer } from "vite";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const PORT = parseInt(process.env.PORT || "3000", 10);
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(cors());
 
 // Initialize Gemini SDK
 const ai = new GoogleGenAI({

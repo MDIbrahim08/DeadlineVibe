@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import {
   LifeBuoy, AlertTriangle, Copy, Check, Sparkles, Trash2,
   ShieldAlert, Loader2, Calendar, Scissors, Mail, Zap, ChevronRight
@@ -45,7 +45,7 @@ export default function RescueModeComponent({
 
     setIsRescuing(true);
     try {
-      const response = await fetch("/api/gemini/rescue", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/rescue`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -63,7 +63,7 @@ export default function RescueModeComponent({
         taskTitle: task.title,
         emergencyPlan: data.emergencyPlan || ["Quick 20-min sprint immediately.", "Focus on core deliverable.", "Polish tomorrow."],
         communicationDrafts: data.communicationDrafts || [],
-        calendarBlock: data.calendarBlock || "Block the next 2 hours immediately as 'Deep Sprint' — decline all meetings.",
+        calendarBlock: data.calendarBlock || "Block the next 2 hours immediately as 'Deep Sprint' â€” decline all meetings.",
         scopeReduction: data.scopeReduction || "Cut all non-essential features. Ship the core loop only.",
         rescheduleVibe: data.rescheduleVibe || "Cancel anything that can wait 24 hours.",
       };
@@ -103,7 +103,7 @@ export default function RescueModeComponent({
               ))}
             </ol>
             <div className="p-3 rounded-xl bg-red-950/30 border border-red-500/25 text-[11px] text-red-300 leading-relaxed">
-              <span className="font-bold block mb-1 flex items-center gap-1">🗑️ Sacrifice Ritual:</span>
+              <span className="font-bold block mb-1 flex items-center gap-1">ðŸ—‘ï¸ Sacrifice Ritual:</span>
               {wp.rescheduleVibe}
             </div>
           </div>
@@ -194,7 +194,7 @@ export default function RescueModeComponent({
               <p className="text-slate-200 leading-relaxed">{wp.scopeReduction}</p>
             </div>
             <div className="p-3 rounded-xl bg-slate-950/40 border border-white/5 text-[11px] text-slate-400 italic">
-              💡 Remember: A 60% complete submission that ships beats a 100% perfect plan that doesn't.
+              ðŸ’¡ Remember: A 60% complete submission that ships beats a 100% perfect plan that doesn't.
             </div>
             <button
               onClick={() => handleCopyText(wp.scopeReduction, `${wp.taskId}-scope`)}
@@ -229,7 +229,7 @@ export default function RescueModeComponent({
       </div>
 
       <p className="text-xs text-slate-400 mb-5 leading-relaxed relative z-10">
-        Stuck? Get <strong className="text-slate-200">parallel rescue</strong> across 4 fronts simultaneously — sprint tactics, email drafts, calendar blocks, and scope cuts.
+        Stuck? Get <strong className="text-slate-200">parallel rescue</strong> across 4 fronts simultaneously â€” sprint tactics, email drafts, calendar blocks, and scope cuts.
       </p>
 
       {eligibleTasks.length === 0 ? (
@@ -247,13 +247,13 @@ export default function RescueModeComponent({
               onChange={(e) => setSelectedTaskId(e.target.value)}
               className="bg-slate-950/70 border border-white/8 p-3 rounded-xl focus:border-amber-400/30 focus:outline-none text-slate-200 text-sm transition-colors"
             >
-              <option value="">— Choose endangered task —</option>
+              <option value="">â€” Choose endangered task â€”</option>
               {eligibleTasks.map((t) => {
                 const parsedDate = new Date(t.deadline);
                 const dateText = isNaN(parsedDate.getTime()) ? "No deadline" : parsedDate.toLocaleDateString();
                 return (
                   <option key={t.id} value={t.id}>
-                    {t.title} · Due {dateText}
+                    {t.title} Â· Due {dateText}
                   </option>
                 );
               })}

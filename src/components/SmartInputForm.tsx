@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Sparkles, Mic, Loader2, Plus, Calendar, Flame } from "lucide-react";
 import { Task } from "../types";
 import { AIInputWithLoading } from "./ui/ai-input-with-loading";
@@ -40,7 +40,7 @@ export default function SmartInputForm({ onTasksAdded, currentMood }: SmartInput
     setVibeCategory("Deep Work");
   };
 
-  // Pure JS date parser — ZERO AI involvement. Prevents all hallucinations.
+  // Pure JS date parser â€” ZERO AI involvement. Prevents all hallucinations.
   const parseDeadlineFromText = (text: string): string => {
     const now = new Date();
     const lower = text.toLowerCase();
@@ -52,7 +52,7 @@ export default function SmartInputForm({ onTasksAdded, currentMood }: SmartInput
     } else if (lower.match(/\bnext week\b/)) {
       baseDate.setDate(now.getDate() + 7);
     }
-    // "today" or no date modifier → stay on today
+    // "today" or no date modifier â†’ stay on today
 
     // Extract time (e.g. "6:30 pm", "6pm", "18:30", "9am")
     const timeMatch = lower.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/);
@@ -75,7 +75,7 @@ export default function SmartInputForm({ onTasksAdded, currentMood }: SmartInput
     if (!value.trim()) return;
     setIsParsing(true);
     try {
-      const res = await fetch("/api/gemini/parse-smart-input", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/parse-smart-input`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -239,11 +239,11 @@ export default function SmartInputForm({ onTasksAdded, currentMood }: SmartInput
                 onChange={(e) => setVibeCategory(e.target.value as Task["vibeCategory"])}
                 className="bg-slate-950/70 border border-white/10 p-3 rounded-xl focus:border-rose-400/30 focus:outline-none text-slate-200 text-sm"
               >
-                <option value="Deep Work">🧠 Deep Work</option>
-                <option value="Admin Hustle">💼 Admin Hustle</option>
-                <option value="Creative Flow">🎨 Creative Flow</option>
-                <option value="Quick Win">⚡ Quick Win</option>
-                <option value="Personal">🏡 Personal</option>
+                <option value="Deep Work">ðŸ§  Deep Work</option>
+                <option value="Admin Hustle">ðŸ’¼ Admin Hustle</option>
+                <option value="Creative Flow">ðŸŽ¨ Creative Flow</option>
+                <option value="Quick Win">âš¡ Quick Win</option>
+                <option value="Personal">ðŸ¡ Personal</option>
               </select>
             </div>
 

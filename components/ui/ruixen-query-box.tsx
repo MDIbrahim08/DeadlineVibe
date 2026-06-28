@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Mic, SendHorizonal, Upload, Loader2 } from "lucide-react";
 import { useState, useRef } from "react";
@@ -130,7 +130,7 @@ export default function RuixenQueryBox({ onSend, isLoading }: RuixenQueryBoxProp
         reader.onloadend = async () => {
           const base64data = (reader.result as string).split(",")[1];
           try {
-            const res = await fetch("/api/stt", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/stt`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ audioBase64: base64data }),

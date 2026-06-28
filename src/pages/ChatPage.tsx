@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+﻿import React, { useState, useRef, useEffect } from "react";
 import { Ghost, ShieldAlert, Zap, Plus, FileWarning, User, Bot, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Task, RescuePlan } from "../types";
@@ -101,7 +101,7 @@ export default function ChatPage({
     saveMessageToDb("bot", text);
   };
 
-  // Pure JS date/time parser — ZERO AI involvement. 100% accurate.
+  // Pure JS date/time parser â€” ZERO AI involvement. 100% accurate.
   const parseDeadlineFromText = (text: string): string | null => {
     const lower = text.toLowerCase();
 
@@ -112,7 +112,7 @@ export default function ChatPage({
     } else if (lower.match(/\bnext week\b/)) {
       baseDate.setDate(baseDate.getDate() + 7);
     }
-    // "today" or no modifier → stay on today's date
+    // "today" or no modifier â†’ stay on today's date
 
     // Match time patterns like "7:00pm", "7pm", "19:00", "6:30 pm"
     // Use a specific pattern that matches "7:00pm" not partial numbers in words like "100"
@@ -134,7 +134,7 @@ export default function ChatPage({
       return baseDate.toISOString();
     }
 
-    return null; // No time found — let AI decide
+    return null; // No time found â€” let AI decide
   };
 
   const handleSend = async (text: string, isAudioInput: boolean = false) => {
@@ -156,7 +156,7 @@ export default function ChatPage({
           return;
         }
 
-        const res = await fetch("/api/gemini/parse-smart-input", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/parse-smart-input`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ input: dumpText }),
@@ -181,7 +181,7 @@ export default function ChatPage({
           return;
         }
 
-        const res = await fetch("/api/gemini/rescue", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/rescue`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ taskTitle: rescueSubject, delayReason: "Unforeseen complexities", requestedExtensionDays: 2 }),
@@ -208,7 +208,7 @@ export default function ChatPage({
         }));
         previousContext.push({ role: "user", content: text });
 
-        const res = await fetch("/api/gemini/coach-chat", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/coach-chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -224,7 +224,7 @@ export default function ChatPage({
         let newTask: Task | undefined;
         // Handle Conversational Task Extraction
         if (data.extractedTask) {
-          // ALWAYS override AI deadline with JS parser — prevents date hallucinations
+          // ALWAYS override AI deadline with JS parser â€” prevents date hallucinations
           const parsedDeadline = parseDeadlineFromText(text);
           newTask = {
             id: Math.random().toString(36).substr(2, 9),
@@ -254,7 +254,7 @@ export default function ChatPage({
           // Play TTS Audio if requested via voice, or if it's high urgency
           if (isAudioInput || urgency === "high") {
             try {
-              const ttsRes = await fetch("/api/tts", {
+              const ttsRes = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/tts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: finalReply, urgency }),
@@ -390,7 +390,7 @@ export default function ChatPage({
                             onClick={() => window.location.href = '/dashboard'}
                             className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors bg-blue-400/10 hover:bg-blue-400/20 px-3 py-1 rounded-full"
                           >
-                            Edit Task →
+                            Edit Task â†’
                           </button>
                         </div>
                       </div>

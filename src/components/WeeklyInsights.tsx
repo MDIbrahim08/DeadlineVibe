@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import {
   TrendingUp, TrendingDown, Minus, Trophy, Target, Calendar,
   Sparkles, Loader2, RefreshCw, BarChart3, CheckCircle2, AlertCircle, ArrowRight, Zap
@@ -27,7 +27,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
   const fetchInsights = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/gemini/weekly-insights", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/weekly-insights`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tasks }),
@@ -35,7 +35,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
 
       let patterns: string[] = [];
       try {
-        const patternRes = await fetch("/api/gemini/pattern-insights", {
+        const patternRes = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/pattern-insights`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ completedTasks: tasks.filter(t => t.completed) }),
@@ -65,7 +65,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
         avgCompletionHours: 0,
         momentum: "stable",
         aiNarrative: `You've completed ${completed.length} tasks with ${overdue.length} overdue. Keep pushing!`,
-        winHighlight: completed.length > 0 ? `Completed "${completed[completed.length - 1]?.title}"` : "No completions yet — time to start!",
+        winHighlight: completed.length > 0 ? `Completed "${completed[completed.length - 1]?.title}"` : "No completions yet â€” time to start!",
         nextWeekFocus: "Prioritize your highest urgency tasks first thing each morning.",
         patterns: ["You tend to build momentum mid-week.", "Focus on quick wins when energy is low."]
       });
@@ -147,7 +147,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
                   onClick={onClose}
                   className="p-2.5 rounded-xl bg-slate-900/80 border border-white/10 text-slate-400 hover:text-white hover:border-rose-500/30 transition-all text-sm font-mono"
                 >
-                  ✕ Close
+                  âœ• Close
                 </button>
               </div>
             </div>
@@ -396,7 +396,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase block">Overall Rate</span>
                     <p className="text-xs text-slate-200 mt-0.5">
-                      {completionRate >= 70 ? "Crushing it this week! 🔥" :
+                      {completionRate >= 70 ? "Crushing it this week! ðŸ”¥" :
                        completionRate >= 40 ? "Steady progress. Keep pushing!" :
                        "Time to shift gears and accelerate."}
                     </p>
@@ -409,7 +409,7 @@ export default function WeeklyInsights({ tasks, onClose }: WeeklyInsightsProps) 
           {/* Footer */}
           <div className="px-6 pb-6 text-center">
             <p className="text-[10px] text-slate-600 font-mono">
-              Built with Google AI Studio & Gemini for Vibe2Ship Hackathon 2026 · Weekly insights powered by Gemini
+              Built with Google AI Studio & Gemini for Vibe2Ship Hackathon 2026 Â· Weekly insights powered by Gemini
             </p>
           </div>
         </div>

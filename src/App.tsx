@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import {
   Flame,
   Timer,
@@ -253,7 +253,7 @@ export default function App() {
   const analyzeTaskWithAI = async (task: Task) => {
     setAnalyzingTaskIds((prev) => [...prev, task.id]);
     try {
-      const response = await fetch("/api/gemini/analyze-task", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/analyze-task`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -298,13 +298,13 @@ export default function App() {
     }
   };
 
-  // ── One-Click Ship It ──────────────────────────────────────────────────────
+  // â”€â”€ One-Click Ship It â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 
   const handleShipIt = async (task: Task) => {
     setShipItLoadingId(task.id);
     try {
-      const response = await fetch("/api/gemini/ship-it", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/ship-it`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -329,13 +329,13 @@ export default function App() {
     }
   };
 
-  // ── Auto-Schedule ──────────────────────────────────────────────────────────
+  // â”€â”€ Auto-Schedule â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleSmartSchedule = async () => {
     const activeTasks = tasks.filter(t => !t.completed);
     if (activeTasks.length === 0) return;
     setIsScheduling(true);
     try {
-      const response = await fetch("/api/gemini/smart-schedule", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/smart-schedule`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -434,7 +434,7 @@ export default function App() {
     const task = tasks.find(t => t.id === taskId);
     if (!task) return;
     try {
-      const res = await fetch("/api/gemini/autopilot", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/autopilot`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: task.title, description: task.description })

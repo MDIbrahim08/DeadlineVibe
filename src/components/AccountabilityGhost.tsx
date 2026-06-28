@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+﻿import React, { useState, useRef, useEffect } from "react";
 import { Ghost, Send, Loader2, Sparkles, Clock, CheckCircle2, AlertTriangle, MessageSquare } from "lucide-react";
 import { Message, Task } from "../types";
 
@@ -7,10 +7,10 @@ interface AccountabilityGhostProps {
 }
 
 const SUGGESTION_CHIPS = [
-  { emoji: "😫", text: "High procrastination panic", msg: "I'm seriously procrastinating hard right now. Help me break out of this loop!" },
-  { emoji: "🚀", text: "Quick motivation hit", msg: "Give me a cheeky motivational quote to kick me into gear right now." },
-  { emoji: "📊", text: "Review my priorities", msg: "Can you summarize what I should focus on RIGHT NOW based on my active deadlines?" },
-  { emoji: "😰", text: "Overdue task anxiety", msg: "I have tasks that are already overdue and I'm anxious. What should I do first?" },
+  { emoji: "ðŸ˜«", text: "High procrastination panic", msg: "I'm seriously procrastinating hard right now. Help me break out of this loop!" },
+  { emoji: "ðŸš€", text: "Quick motivation hit", msg: "Give me a cheeky motivational quote to kick me into gear right now." },
+  { emoji: "ðŸ“Š", text: "Review my priorities", msg: "Can you summarize what I should focus on RIGHT NOW based on my active deadlines?" },
+  { emoji: "ðŸ˜°", text: "Overdue task anxiety", msg: "I have tasks that are already overdue and I'm anxious. What should I do first?" },
 ];
 
 function getContextualOpener(tasks: Task[]): string {
@@ -23,16 +23,16 @@ function getContextualOpener(tasks: Task[]): string {
   const recentlyDone = tasks.filter(t => t.completed).slice(-1)[0];
 
   if (overdue.length > 0) {
-    return `Booo! 👻 I'm detecting ${overdue.length} overdue task${overdue.length > 1 ? "s" : ""} — including "${overdue[0].title}". That's a haunting I can't ignore! Let's tackle this NOW. What's the blocker?`;
+    return `Booo! ðŸ‘» I'm detecting ${overdue.length} overdue task${overdue.length > 1 ? "s" : ""} â€” including "${overdue[0].title}". That's a haunting I can't ignore! Let's tackle this NOW. What's the blocker?`;
   }
   if (critical.length > 0) {
     const hoursLeft = Math.round((new Date(critical[0].deadline).getTime() - Date.now()) / 3600000);
-    return `Booo! 👻 CRITICAL ALERT: "${critical[0].title}" has only ${hoursLeft}h left! I'm your Accountability Ghost and I refuse to let this slip. Start your Vibe Ignition timer immediately!`;
+    return `Booo! ðŸ‘» CRITICAL ALERT: "${critical[0].title}" has only ${hoursLeft}h left! I'm your Accountability Ghost and I refuse to let this slip. Start your Vibe Ignition timer immediately!`;
   }
   if (recentlyDone) {
-    return `Booo! 👻 I'm your Accountability Ghost — and I see you just crushed "${recentlyDone.title}"! 🔥 That's what I'm here for. ${active.length > 0 ? `You still have ${active.length} tasks left — keep the momentum alive!` : "Clear board! But the grind never stops. Ready for what's next?"}`;
+    return `Booo! ðŸ‘» I'm your Accountability Ghost â€” and I see you just crushed "${recentlyDone.title}"! ðŸ”¥ That's what I'm here for. ${active.length > 0 ? `You still have ${active.length} tasks left â€” keep the momentum alive!` : "Clear board! But the grind never stops. Ready for what's next?"}`;
   }
-  return `Booo! 👻 I'm the Accountability Ghost, haunting your procrastination since day one. I'm watching ${active.length} active task${active.length !== 1 ? "s" : ""} right now. Don't make me rattle my chains — tell me what you need!`;
+  return `Booo! ðŸ‘» I'm the Accountability Ghost, haunting your procrastination since day one. I'm watching ${active.length} active task${active.length !== 1 ? "s" : ""} right now. Don't make me rattle my chains â€” tell me what you need!`;
 }
 
 export default function AccountabilityGhost({ currentTasks }: AccountabilityGhostProps) {
@@ -76,7 +76,7 @@ export default function AccountabilityGhost({ currentTasks }: AccountabilityGhos
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/gemini/coach-chat", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/gemini/coach-chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -93,7 +93,7 @@ export default function AccountabilityGhost({ currentTasks }: AccountabilityGhos
         {
           id: Math.random().toString(),
           role: "assistant",
-          content: data.reply || "The static is heavy. But whatever you do — don't stop now!",
+          content: data.reply || "The static is heavy. But whatever you do â€” don't stop now!",
           timestamp: new Date().toLocaleTimeString(),
         },
       ]);
@@ -132,7 +132,7 @@ export default function AccountabilityGhost({ currentTasks }: AccountabilityGhos
           </div>
           <div>
             <h2 className="font-serif text-base font-semibold text-slate-100">Accountability Ghost</h2>
-            <p className="text-[9px] font-mono text-slate-500">Contextual · Task-Aware · Always Watching</p>
+            <p className="text-[9px] font-mono text-slate-500">Contextual Â· Task-Aware Â· Always Watching</p>
           </div>
         </div>
 
@@ -199,8 +199,8 @@ export default function AccountabilityGhost({ currentTasks }: AccountabilityGhos
             }`}
           >
             <div className="flex items-center gap-1 text-[9px] font-mono text-slate-500 mb-0.5 px-1">
-              <span>{m.role === "user" ? "You" : "👻 Ghost"}</span>
-              <span>·</span>
+              <span>{m.role === "user" ? "You" : "ðŸ‘» Ghost"}</span>
+              <span>Â·</span>
               <span>{m.timestamp}</span>
             </div>
             <div
@@ -222,9 +222,9 @@ export default function AccountabilityGhost({ currentTasks }: AccountabilityGhos
               <span>Ghost is conjuring a response...</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/75 border border-indigo-500/12 rounded-tl-none text-slate-500 flex gap-1.5">
-              <span className="animate-bounce" style={{ animationDelay: "0ms" }}>●</span>
-              <span className="animate-bounce" style={{ animationDelay: "150ms" }}>●</span>
-              <span className="animate-bounce" style={{ animationDelay: "300ms" }}>●</span>
+              <span className="animate-bounce" style={{ animationDelay: "0ms" }}>â—</span>
+              <span className="animate-bounce" style={{ animationDelay: "150ms" }}>â—</span>
+              <span className="animate-bounce" style={{ animationDelay: "300ms" }}>â—</span>
             </div>
           </div>
         )}

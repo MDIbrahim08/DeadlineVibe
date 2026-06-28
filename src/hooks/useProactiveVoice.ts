@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { Task } from '../types';
 
 export function useProactiveVoice(tasks: Task[]) {
@@ -21,7 +21,7 @@ export function useProactiveVoice(tasks: Task[]) {
 
           const text = `Hey, just a heads up. Your task, ${task.title}, is due in ${Math.round(hoursLeft)} hours. Let's get focused and crush it.`;
 
-          fetch("/api/tts", {
+          fetch(`${import.meta.env.VITE_API_URL || ""}/api/tts`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text, urgency: "high" }),
